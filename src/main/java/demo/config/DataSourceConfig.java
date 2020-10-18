@@ -3,6 +3,7 @@ package demo.config;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +17,8 @@ import javax.sql.DataSource;
  * @author Neo
  * @since 10/17/2020-6:58 PM
  */
-@Configuration
+@Configuration()
+@MapperScan(basePackages = "demo.dao")
 public class DataSourceConfig {
 
     @Bean
@@ -30,6 +32,7 @@ public class DataSourceConfig {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
         factoryBean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("mybatis-config.xml"));
+        factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("dao/*.xml"));
         return factoryBean.getObject();
     }
 
