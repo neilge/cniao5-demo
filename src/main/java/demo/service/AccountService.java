@@ -11,4 +11,6 @@ import java.util.List;
 public interface AccountService {
 
     List<Account> getAllAccounts();
+
+    String sendCaptcha(String email);
 }

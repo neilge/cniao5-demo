@@ -4,3 +4,20 @@ spring:
     jdbcUrl: jdbc:mysql://localhost:3306/demo
     username: admin
     password: admin
+  mail:
+    host: smtp.gmail.com
+    username: neilge.edu@gmail.com
+    password: Gxy660909
+    protocol: smtp
+    from: neilge.edu@gmail.com
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          port: 465
+          starttls:
+            enable: true
+            requried: true
+          ssl:
+            enable: true

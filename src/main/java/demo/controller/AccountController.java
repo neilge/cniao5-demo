@@ -3,8 +3,7 @@ package demo.controller;
 import demo.model.Account;
 import demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,6 +12,7 @@ import java.util.List;
  * @since 10/17/2020-7:51 PM
  */
 @RestController
+@RequestMapping("/account")
 public class AccountController {
 
     @Autowired
@@ -21,5 +21,10 @@ public class AccountController {
     @GetMapping("/accounts")
     public List<Account> getAllAccounts() {
         return accountService.getAllAccounts();
+    }
+
+    @PostMapping("/captcha")
+    public String sendCaptcha(@RequestBody String email) {
+        return accountService.sendCaptcha(email);
     }
 }
