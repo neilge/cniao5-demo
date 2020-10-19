@@ -21,3 +21,12 @@ spring:
             requried: true
           ssl:
             enable: true
+encoding:
+  aes:
+    key-seed: ajlkdfla
+    algorithm: AES
+    random-algorithm: SHA1PRNG
+    transformation: AES/ECB/PKCS5Padding
+    key-size: 128
+    encode: utf-8
+

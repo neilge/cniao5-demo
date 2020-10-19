@@ -4,6 +4,8 @@ import demo.dao.AccountDao;
 import demo.model.Account;
 import demo.service.AccountService;
 import demo.service.MailService;
+import demo.util.AESUtil;
+import demo.util.VerificationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,9 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private AESUtil aesUtil;
+
     @Override
     public List<Account> getAllAccounts() {
         return accountDao.findAll();
@@ -29,7 +34,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String sendCaptcha(String email) {
-        mailService.sendMail(email, "菜鸟窝注册验证", "验证内容");
-        return "success";
+        String verificationCode = VerificationUtil.generateVerificationCode();
+        mailService.sendMail(email, "菜鸟窝注册验证", "验证码为: " + verificationCode);
+        return aesUtil.encrypt(verificationCode);
     }
 }
