@@ -1,5 +1,6 @@
 package demo.service.impl;
 
+import demo.common.BackendException;
 import demo.dao.AccountDao;
 import demo.model.Account;
 import demo.service.AccountService;
@@ -7,8 +8,10 @@ import demo.service.MailService;
 import demo.util.AESUtil;
 import demo.util.VerificationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 /**
@@ -35,9 +38,16 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account creatAccount(Account account, String verificationCode, String encryptedCode) {
         if (!aesUtil.decrypt(encryptedCode).equals(verificationCode)) {
-            return null;
+            throw new BackendException("验证码错误");
         }
-        accountDao.addOne(account);
+        try {
+            accountDao.addOne(account);
+        } catch (Exception e) {
+            if (e instanceof DuplicateKeyException) {
+                throw new BackendException("邮箱已注册, 请选择其他邮箱");
+            }
+            throw new BackendException("数据库未知错误");
+        }
         return account;
     }
 

@@ -1,5 +1,7 @@
 package demo.controller;
 
+import demo.common.BackendException;
+import demo.controller.common.JsonResponse;
 import demo.model.Account;
 import demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +37,18 @@ public class AccountController {
     }
 
     @PostMapping("/registration/{verificationCode}")
-    public String registerAccount(@RequestBody Account account, @PathVariable String verificationCode, HttpServletRequest request) {
+    public JsonResponse registerAccount(@RequestBody Account account, @PathVariable String verificationCode, HttpServletRequest request) {
         String encryptedCode = request.getHeader("token");
-        if (accountService.creatAccount(account, verificationCode, encryptedCode) == null) {
-            return "failed";
+        JsonResponse response = new JsonResponse();
+        try {
+            response.setCode(1);
+            response.setMessage("succeed");
+            response.setData(accountService.creatAccount(account, verificationCode, encryptedCode));
+            return response;
+        } catch (BackendException exception) {
+            response.setCode(0);
+            response.setMessage(exception.getMessage());
+            return response;
         }
-        return "success";
     }
 }
