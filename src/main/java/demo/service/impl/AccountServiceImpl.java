@@ -33,6 +33,15 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Account creatAccount(Account account, String verificationCode, String encryptedCode) {
+        if (!aesUtil.decrypt(encryptedCode).equals(verificationCode)) {
+            return null;
+        }
+        accountDao.addOne(account);
+        return account;
+    }
+
+    @Override
     public String sendCaptcha(String email) {
         String verificationCode = VerificationUtil.generateVerificationCode();
         mailService.sendMail(email, "菜鸟窝注册验证", "验证码为: " + verificationCode);

@@ -19,4 +19,9 @@
         *
         FROM account;
     </select>
+
+    <insert id="addOne" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO account(email, username, password)
+        VALUES (#{email}, #{username}, #{password});
+    </insert>
 </mapper>

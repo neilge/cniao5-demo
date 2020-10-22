@@ -12,5 +12,7 @@ public interface AccountService {
 
     List<Account> getAllAccounts();
 
+    Account creatAccount(Account account, String verificationCode, String encryptedCode);
+
     String sendCaptcha(String email);
 }
