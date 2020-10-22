@@ -23,32 +23,32 @@ import java.util.List;
 @RequestMapping("/account")
 public class AccountController {
 
-    @Autowired
-    AccountService accountService;
+  @Autowired AccountService accountService;
 
-    @GetMapping("/accounts")
-    public List<Account> getAllAccounts() {
-        return accountService.getAllAccounts();
-    }
+  @GetMapping("/accounts")
+  public List<Account> getAllAccounts() {
+    return accountService.getAllAccounts();
+  }
 
-    @PostMapping("/captcha")
-    public String sendCaptcha(@RequestBody String email) {
-        return accountService.sendCaptcha(email);
-    }
+  @PostMapping("/captcha")
+  public String sendCaptcha(@RequestBody String email) {
+    return accountService.sendCaptcha(email);
+  }
 
-    @PostMapping("/registration/{verificationCode}")
-    public JsonResponse registerAccount(@RequestBody Account account, @PathVariable String verificationCode, HttpServletRequest request) {
-        String encryptedCode = request.getHeader("token");
-        JsonResponse response = new JsonResponse();
-        try {
-            response.setCode(1);
-            response.setMessage("succeed");
-            response.setData(accountService.creatAccount(account, verificationCode, encryptedCode));
-            return response;
-        } catch (BackendException exception) {
-            response.setCode(0);
-            response.setMessage(exception.getMessage());
-            return response;
-        }
+  @PostMapping("/registration/{verificationCode}")
+  public JsonResponse registerAccount(
+      @RequestBody Account account,
+      @PathVariable String verificationCode,
+      HttpServletRequest request) {
+    String encryptedCode = request.getHeader("token");
+    try {
+      return JsonResponse.newBuilder()
+          .setCode(1)
+          .setMessage("succeed")
+          .setData(accountService.creatAccount(account, verificationCode, encryptedCode))
+          .build();
+    } catch (BackendException exception) {
+      return JsonResponse.newBuilder().setCode(0).setMessage(exception.getMessage()).build();
     }
+  }
 }

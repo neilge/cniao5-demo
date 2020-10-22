@@ -10,9 +10,9 @@ import java.util.List;
  */
 public interface AccountService {
 
-    List<Account> getAllAccounts();
+  List<Account> getAllAccounts();
 
-    Account creatAccount(Account account, String verificationCode, String encryptedCode);
+  Account creatAccount(Account account, String verificationCode, String encryptedCode);
 
-    String sendCaptcha(String email);
+  String sendCaptcha(String email);
 }

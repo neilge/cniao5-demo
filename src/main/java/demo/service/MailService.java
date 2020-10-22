@@ -6,5 +6,5 @@ package demo.service;
  */
 public interface MailService {
 
-    void sendMail(String to, String subject, String text);
+  void sendMail(String to, String subject, String text);
 }

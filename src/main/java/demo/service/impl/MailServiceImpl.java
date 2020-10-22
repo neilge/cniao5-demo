@@ -14,19 +14,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailServiceImpl implements MailService {
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+  @Autowired private JavaMailSender javaMailSender;
 
-    @Value("${spring.mail.from}")
-    private String from;
+  @Value("${spring.mail.from}")
+  private String from;
 
-    @Override
-    public void sendMail(String to, String subject, String text) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
-        javaMailSender.send(message);
-    }
+  @Override
+  public void sendMail(String to, String subject, String text) {
+    SimpleMailMessage message = new SimpleMailMessage();
+    message.setFrom(from);
+    message.setTo(to);
+    message.setSubject(subject);
+    message.setText(text);
+    javaMailSender.send(message);
+  }
 }
