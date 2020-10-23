@@ -16,8 +16,24 @@
     <!--查询所有用户-->
     <select id="findAll" resultMap="accountResultMap">
         SELECT
-        *
+        <include refid="user_info"/>
         FROM account;
+    </select>
+
+    <!--根据id查询用户-->
+    <select id="findById" resultMap="accountResultMap">
+        SELECT
+        <include refid="user_info"/>
+        FROM account
+        WHERE id=#{id};
+    </select>
+
+    <!--根据邮箱查询用户-->
+    <select id="findByEmail" resultMap="accountResultMap">
+        SELECT
+        <include refid="user_info"/>
+        FROM account
+        WHERE email=#{email};
     </select>
 
     <insert id="addOne" useGeneratedKeys="true" keyProperty="id" keyColumn="id">

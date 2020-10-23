@@ -48,9 +48,34 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
+  public Account getAccount(long id) {
+    Account account = accountDao.findById(id);
+    if (account == null) {
+      throw new BackendException("用户" + id + "不存在");
+    }
+    return account;
+  }
+
+  @Override
+  public Account getAccount(String email) {
+    Account account = accountDao.findByEmail(email);
+    if (account == null) {
+      throw new BackendException("用户" + email + "不存在");
+    }
+    return account;
+  }
+
+  @Override
   public String sendCaptcha(String email) {
+    if (accountDao.findByEmail(email) != null) {
+      throw new BackendException("邮箱已被注册, 请选择其他邮箱");
+    }
     String verificationCode = VerificationUtil.generateVerificationCode();
-    mailService.sendMail(email, "菜鸟窝注册验证", "验证码为: " + verificationCode);
-    return aesUtil.encrypt(verificationCode);
+    try {
+      mailService.sendMail(email, "菜鸟窝注册验证", "验证码为: " + verificationCode);
+      return aesUtil.encrypt(verificationCode);
+    } catch (Exception e) {
+      throw new BackendException("邮件发送失败");
+    }
   }
 }

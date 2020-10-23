@@ -1,6 +1,5 @@
 package demo.controller;
 
-import demo.common.BackendException;
 import demo.controller.common.JsonResponse;
 import demo.model.Account;
 import demo.service.AccountService;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author Neo
@@ -26,13 +24,39 @@ public class AccountController {
   @Autowired AccountService accountService;
 
   @GetMapping("/accounts")
-  public List<Account> getAllAccounts() {
-    return accountService.getAllAccounts();
+  public JsonResponse getAllAccounts() {
+    return JsonResponse.newBuilder()
+        .setCode(1)
+        .setMessage("succeed")
+        .setData(accountService.getAllAccounts())
+        .build();
+  }
+
+  @GetMapping("/id/{id}")
+  public JsonResponse getAccountById(@PathVariable("id") long id) {
+    return JsonResponse.newBuilder()
+        .setCode(1)
+        .setMessage("succeed")
+        .setData(accountService.getAccount(id))
+        .build();
+  }
+
+  @GetMapping("/email/{email}")
+  public JsonResponse getAccountByEmail(@PathVariable("email") String email) {
+    return JsonResponse.newBuilder()
+        .setCode(1)
+        .setMessage("succeed")
+        .setData(accountService.getAccount(email))
+        .build();
   }
 
   @PostMapping("/captcha")
-  public String sendCaptcha(@RequestBody String email) {
-    return accountService.sendCaptcha(email);
+  public JsonResponse sendCaptcha(@RequestBody Account account) {
+    return JsonResponse.newBuilder()
+        .setCode(1)
+        .setMessage("succeed")
+        .setData(accountService.sendCaptcha(account.getEmail()))
+        .build();
   }
 
   @PostMapping("/registration/{verificationCode}")
@@ -41,14 +65,10 @@ public class AccountController {
       @PathVariable String verificationCode,
       HttpServletRequest request) {
     String encryptedCode = request.getHeader("token");
-    try {
-      return JsonResponse.newBuilder()
-          .setCode(1)
-          .setMessage("succeed")
-          .setData(accountService.creatAccount(account, verificationCode, encryptedCode))
-          .build();
-    } catch (BackendException exception) {
-      return JsonResponse.newBuilder().setCode(0).setMessage(exception.getMessage()).build();
-    }
+    return JsonResponse.newBuilder()
+        .setCode(1)
+        .setMessage("succeed")
+        .setData(accountService.creatAccount(account, verificationCode, encryptedCode))
+        .build();
   }
 }
