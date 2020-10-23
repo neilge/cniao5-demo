@@ -55,7 +55,7 @@ public class AccountController {
     return JsonResponse.newBuilder()
         .setCode(1)
         .setMessage("succeed")
-        .setData(accountService.sendCaptcha(account.getEmail()))
+        .setData(accountService.generateCaptcha(account.getEmail()))
         .build();
   }
 

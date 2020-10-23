@@ -30,3 +30,7 @@ encoding:
     key-size: 128
     encode: utf-8
 
+#Unit: second
+verification:
+  expire: 60
+
