@@ -2,6 +2,7 @@ package demo.controller;
 
 import demo.controller.common.JsonResponse;
 import demo.model.Account;
+import demo.model.VerificationRequest;
 import demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,16 +60,18 @@ public class AccountController {
         .build();
   }
 
-  @PostMapping("/registration/{verificationCode}")
+  @PostMapping("/registration")
   public JsonResponse registerAccount(
-      @RequestBody Account account,
-      @PathVariable String verificationCode,
-      HttpServletRequest request) {
+      @RequestBody VerificationRequest verificationRequest, HttpServletRequest request) {
     String encryptedCode = request.getHeader("token");
     return JsonResponse.newBuilder()
         .setCode(1)
         .setMessage("succeed")
-        .setData(accountService.creatAccount(account, verificationCode, encryptedCode))
+        .setData(
+            accountService.creatAccount(
+                verificationRequest.getAccount(),
+                verificationRequest.getVerificationCode(),
+                encryptedCode))
         .build();
   }
 }

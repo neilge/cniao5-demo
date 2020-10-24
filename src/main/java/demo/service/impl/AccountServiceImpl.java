@@ -64,8 +64,8 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public Account creatAccount(Account account, String verificationCode, String token) {
-    if (!verificationUtil.isTokenExpired(token)) {
-      throw new BackendException("验证码错已失效");
+    if (verificationUtil.isTokenExpired(token)) {
+      throw new BackendException("验证码已失效");
     }
     if (!verificationUtil.isVerificationTokenMatched(token, verificationCode)) {
       throw new BackendException("验证码错错误");
