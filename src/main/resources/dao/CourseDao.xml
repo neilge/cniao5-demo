@@ -34,9 +34,9 @@
         SELECT
         <include refid="course_info" />,
         <include refid="lesson_info" />
-        FROM course c, lesson l
-        WHERE c.id=#{id}
-        AND c.id=l.course_id;
+        FROM course c
+        LEFT OUTER JOIN lesson l on c.id=l.course_id
+        WHERE c.id=#{id};
     </select>
 
     <insert id="addOne" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
