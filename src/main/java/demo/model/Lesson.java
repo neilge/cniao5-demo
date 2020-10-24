@@ -1,6 +1,8 @@
 package demo.model;
 
-public class Lesson {
+import java.io.Serializable;
+
+public class Lesson implements Serializable {
   private long id;
   private String name;
   private boolean isFree;

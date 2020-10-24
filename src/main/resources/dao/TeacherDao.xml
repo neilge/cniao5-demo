@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demo.dao.TeacherDao">
+    <resultMap id="teacherResultMap" type="demo.model.Teacher">
+        <id column="id" property="id" javaType="java.lang.Long"/>
+        <result column="name" property="name" javaType="java.lang.String"/>
+        <result column="title" property="title" javaType="java.lang.String"/>
+    </resultMap>
+    <sql id="teacher_info">id, name, title</sql>
+
+    <select id="findAll" resultMap="teacherResultMap">
+        SELECT
+        <include refid="teacher_info" />
+        FROM teacher;
+    </select>
+</mapper>

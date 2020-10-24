@@ -27,7 +27,7 @@
     <select id="findAll" resultMap="courseResultMap">
         SELECT
         <include refid="course_info" />
-        FROM course;
+        FROM course c;
     </select>
 
     <select id="findById" resultMap="courseLessonMap">

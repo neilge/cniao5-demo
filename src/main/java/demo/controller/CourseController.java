@@ -20,9 +20,7 @@ public class CourseController {
 
   @GetMapping("/courses")
   public JsonResponse getAllCourses() {
-    return JsonResponse.newBuilder()
-        .setCode(1)
-        .setMessage(Constant.SUCCEED)
+    return JsonResponse.newSucceedBuilder()
         .setData(courseService.getAllCourses())
         .build();
   }
