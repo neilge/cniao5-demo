@@ -30,7 +30,10 @@ encoding:
     key-size: 128
     encode: utf-8
 
-#Unit: second
-verification:
+captcha:
   expire: 60
+
+jwt:
+  secret: abcdefg1234567
+  expire: 1000
 

@@ -12,7 +12,7 @@ import java.util.Random;
 public class VerificationUtil {
   private static final int MAX_DIGITS = 6;
 
-  @Value("${verification.expire}")
+  @Value("${captcha.expire}")
   private int verificationExpireSec;
 
   @Autowired private AESUtil aesUtil;
