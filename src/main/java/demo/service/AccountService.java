@@ -19,4 +19,6 @@ public interface AccountService {
   Account getAccount(String email);
 
   String generateCaptcha(String email);
+
+  String login(Account account);
 }

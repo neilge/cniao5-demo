@@ -74,4 +74,10 @@ public class AccountController {
                 encryptedCode))
         .build();
   }
+
+  @PostMapping("/login")
+  public JsonResponse login(@RequestBody Account account) {
+    String jwt = accountService.login(account);
+    return JsonResponse.newBuilder().setCode(1).setMessage("succeed").setData(jwt).build();
+  }
 }

@@ -5,6 +5,7 @@ import demo.dao.AccountDao;
 import demo.model.Account;
 import demo.service.AccountService;
 import demo.service.MailService;
+import demo.util.JWTUtil;
 import demo.util.VerificationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -24,6 +25,8 @@ public class AccountServiceImpl implements AccountService {
   @Autowired private MailService mailService;
 
   @Autowired private VerificationUtil verificationUtil;
+
+  @Autowired private JWTUtil jwtUtil;
 
   @Override
   public List<Account> getAllAccounts() {
@@ -60,6 +63,15 @@ public class AccountServiceImpl implements AccountService {
     } catch (Exception e) {
       throw new BackendException("邮件发送失败");
     }
+  }
+
+  @Override
+  public String login(Account account) {
+    Account storageAccount = accountDao.findByEmail(account.getEmail());
+    if (storageAccount != null && account.getPassword().equals(storageAccount.getPassword())) {
+      return jwtUtil.generateToken(account.getEmail());
+    }
+    throw new BackendException("登录失败");
   }
 
   @Override
