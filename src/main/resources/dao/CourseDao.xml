@@ -11,7 +11,18 @@
         <result column="name" property="name" javaType="java.lang.String"/>
     </resultMap>
 
-    <sql id="course_info">id, description, price, is_free, name</sql>
+    <resultMap id="courseLessonMap" type="demo.model.Course" extends="courseResultMap">
+        <collection property="lessons" ofType="demo.model.Lesson">
+            <id column="l_id" property="id" javaType="java.lang.Long"/>
+            <result column="l_is_free" property="isFree" javaType="java.lang.Boolean"/>
+            <result column="l_name" property="name" javaType="java.lang.String"/>
+            <result column="duration" property="duration" javaType="java.lang.Long"/>
+            <result column="url" property="url" javaType="java.lang.String"/>
+        </collection>
+    </resultMap>
+
+    <sql id="course_info">c.id, description, price, c.is_free, c.name</sql>
+    <sql id="lesson_info">l.id as l_id, l.is_free as l_is_free, l.name as l_name, duration, url</sql>
 
     <select id="findAll" resultMap="courseResultMap">
         SELECT
@@ -19,11 +30,13 @@
         FROM course;
     </select>
 
-    <select id="findById" resultMap="courseResultMap">
+    <select id="findById" resultMap="courseLessonMap">
         SELECT
-        <include refid="course_info"/>
-        FROM course
-        WHERE id=#{id};
+        <include refid="course_info" />,
+        <include refid="lesson_info" />
+        FROM course c, lesson l
+        WHERE c.id=#{id}
+        AND c.id=l.course_id;
     </select>
 
     <insert id="addOne" useGeneratedKeys="true" keyProperty="id" keyColumn="id">

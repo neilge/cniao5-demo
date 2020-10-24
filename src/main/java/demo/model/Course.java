@@ -1,11 +1,23 @@
 package demo.model;
 
+import java.util.List;
+
 public class Course {
   private long id;
   private String description;
   private boolean isFree;
   private String name;
   private double price;
+
+  private List<Lesson> lessons;
+
+  public List<Lesson> getLessons() {
+    return lessons;
+  }
+
+  public void setLessons(List<Lesson> lessons) {
+    this.lessons = lessons;
+  }
 
   public long getId() {
     return id;

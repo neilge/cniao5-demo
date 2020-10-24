@@ -17,4 +17,11 @@ public class CourseDaoTest {
     List<Course> courses = courseDao.findAll();
     System.out.println(courses);
   }
+
+  @Test
+  public void testGetCourseWithLessons() {
+    Course course = courseDao.findById(1);
+    System.out.println(course);
+    System.out.println(course.getLessons());
+  }
 }

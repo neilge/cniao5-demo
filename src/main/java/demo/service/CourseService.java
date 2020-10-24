@@ -5,7 +5,7 @@ import demo.model.Course;
 import java.util.List;
 
 public interface CourseService {
-    List<Course> getAllCourse();
+    List<Course> getAllCourses();
 
     Course getCourseById(long id);
 

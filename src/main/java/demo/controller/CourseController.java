@@ -23,7 +23,7 @@ public class CourseController {
     return JsonResponse.newBuilder()
         .setCode(1)
         .setMessage(Constant.SUCCEED)
-        .setData(courseService.getAllCourse())
+        .setData(courseService.getAllCourses())
         .build();
   }
 

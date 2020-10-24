@@ -36,5 +36,5 @@ captcha:
 jwt:
   secret: abcdefg1234567
   expire: 60000
-  blacklist: /accounts
+  blacklist: /accounts, /course/id
 

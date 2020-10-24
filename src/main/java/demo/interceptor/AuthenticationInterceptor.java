@@ -22,7 +22,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
-        if(!blacklist.stream().anyMatch(path -> uri.endsWith(path))) {
+        if(!blacklist.stream().anyMatch(path -> uri.contains(path))) {
             return true;
         }
         String token = request.getHeader("Authorization");

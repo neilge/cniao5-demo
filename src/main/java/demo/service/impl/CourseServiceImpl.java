@@ -15,7 +15,7 @@ public class CourseServiceImpl implements CourseService {
   @Autowired private CourseDao courseDao;
 
   @Override
-  public List<Course> getAllCourse() {
+  public List<Course> getAllCourses() {
     return courseDao.findAll();
   }
 
