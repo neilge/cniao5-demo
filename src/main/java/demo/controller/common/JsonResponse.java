@@ -40,6 +40,10 @@ public class JsonResponse implements Serializable {
     return new Builder();
   }
 
+  public static Builder newSucceedBuilder() {
+    return new Builder().setCode(1).setMessage(Constant.SUCCEED);
+  }
+
   public static class Builder {
     private long code;
     private String message;

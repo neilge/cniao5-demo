@@ -26,36 +26,22 @@ public class AccountController {
 
   @GetMapping("/accounts")
   public JsonResponse getAllAccounts() {
-    return JsonResponse.newBuilder()
-        .setCode(1)
-        .setMessage("succeed")
-        .setData(accountService.getAllAccounts())
-        .build();
+    return JsonResponse.newSucceedBuilder().setData(accountService.getAllAccounts()).build();
   }
 
   @GetMapping("/id/{id}")
   public JsonResponse getAccountById(@PathVariable("id") long id) {
-    return JsonResponse.newBuilder()
-        .setCode(1)
-        .setMessage("succeed")
-        .setData(accountService.getAccount(id))
-        .build();
+    return JsonResponse.newSucceedBuilder().setData(accountService.getAccount(id)).build();
   }
 
   @GetMapping("/email/{email}")
   public JsonResponse getAccountByEmail(@PathVariable("email") String email) {
-    return JsonResponse.newBuilder()
-        .setCode(1)
-        .setMessage("succeed")
-        .setData(accountService.getAccount(email))
-        .build();
+    return JsonResponse.newSucceedBuilder().setData(accountService.getAccount(email)).build();
   }
 
   @PostMapping("/captcha")
   public JsonResponse sendCaptcha(@RequestBody Account account) {
-    return JsonResponse.newBuilder()
-        .setCode(1)
-        .setMessage("succeed")
+    return JsonResponse.newSucceedBuilder()
         .setData(accountService.generateCaptcha(account.getEmail()))
         .build();
   }
@@ -64,9 +50,7 @@ public class AccountController {
   public JsonResponse registerAccount(
       @RequestBody VerificationRequest verificationRequest, HttpServletRequest request) {
     String encryptedCode = request.getHeader("token");
-    return JsonResponse.newBuilder()
-        .setCode(1)
-        .setMessage("succeed")
+    return JsonResponse.newSucceedBuilder()
         .setData(
             accountService.creatAccount(
                 verificationRequest.getAccount(),
@@ -78,6 +62,6 @@ public class AccountController {
   @PostMapping("/login")
   public JsonResponse login(@RequestBody Account account) {
     String jwt = accountService.login(account);
-    return JsonResponse.newBuilder().setCode(1).setMessage("succeed").setData(jwt).build();
+    return JsonResponse.newSucceedBuilder().setData(jwt).build();
   }
 }

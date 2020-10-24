@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demo.dao.CourseDao">
+    <resultMap id="courseResultMap" type="demo.model.Course">
+        <id column="id" property="id" javaType="java.lang.Long" />
+        <result column="description" property="description" javaType="java.lang.String"/>
+        <result column="price" property="price" javaType="java.lang.Double"/>
+        <result column="is_free" property="isFree" javaType="java.lang.Boolean"/>
+        <result column="name" property="name" javaType="java.lang.String"/>
+    </resultMap>
+
+    <sql id="course_info">id, description, price, is_free, name</sql>
+
+    <select id="findAll" resultMap="courseResultMap">
+        SELECT
+        <include refid="course_info" />
+        FROM course;
+    </select>
+
+    <select id="findById" resultMap="courseResultMap">
+        SELECT
+        <include refid="course_info"/>
+        FROM course
+        WHERE id=#{id};
+    </select>
+
+    <insert id="addOne" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO course(description, price, is_free, name)
+        VALUES (#{description}, #{price}, #{isFree}, #{name});
+    </insert>
+</mapper>
