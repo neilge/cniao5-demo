@@ -1,6 +1,5 @@
 package demo.controller;
 
-import demo.controller.common.Constant;
 import demo.controller.common.JsonResponse;
 import demo.model.Course;
 import demo.service.CourseService;
@@ -27,7 +26,7 @@ public class CourseController {
 
   @GetMapping("/id/{id}")
   public JsonResponse getCourseById(@PathVariable("id") long id) {
-    return JsonResponse.newSucceedBuilder().setData(courseService.getCourseById(id)).build();
+    return JsonResponse.newSucceedBuilder().setData(courseService.getCourse(id)).build();
   }
 
   @PostMapping("/create")

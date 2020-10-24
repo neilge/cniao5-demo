@@ -18,4 +18,11 @@ public class TeacherDaoTest {
 
     System.out.println(teachers);
   }
+
+  @Test
+  public void testGetById() {
+    Teacher teacher = teacherDao.findById(1);
+    System.out.println(teacher);
+    System.out.println(teacher.getCourses());
+  }
 }

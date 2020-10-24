@@ -8,11 +8,33 @@
         <result column="name" property="name" javaType="java.lang.String"/>
         <result column="title" property="title" javaType="java.lang.String"/>
     </resultMap>
-    <sql id="teacher_info">id, name, title</sql>
+
+    <resultMap id="teacherCourseResultMap" type="demo.model.Teacher" extends="teacherResultMap">
+        <collection property="courses" ofType="demo.model.Course">
+            <id column="c_id" property="id" javaType="java.lang.Long"/>
+            <result column="c_name" property="name" javaType="java.lang.String"/>
+            <result column="description" property="description" javaType="java.lang.String"/>
+            <result column="price" property="price" javaType="java.lang.Double"/>
+            <result column="is_free" property="isFree" javaType="java.lang.Boolean"/>
+        </collection>
+    </resultMap>
+
+    <sql id="teacher_info">t.id, t.name, title</sql>
+    <sql id="course_info">c.id as c_id, c.name as c_name, description, is_free, price</sql>
 
     <select id="findAll" resultMap="teacherResultMap">
         SELECT
-        <include refid="teacher_info" />
-        FROM teacher;
+        <include refid="teacher_info"/>
+        FROM teache t;
+    </select>
+
+    <select id="findById" resultMap="teacherCourseResultMap">
+        SELECT
+        <include refid="teacher_info"/>,
+        <include refid="course_info"/>
+        FROM teacher t
+        LEFT OUTER JOIN teacher_course tc ON t.id = tc.teacher_id
+        LEFT OUTER JOIN course c ON c.id = tc.course_id
+        WHERE t.id=#{id};
     </select>
 </mapper>

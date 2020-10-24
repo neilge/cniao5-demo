@@ -17,4 +17,9 @@ public class TeacherServiceImpl implements TeacherService {
     public List<Teacher> getAllTeachers() {
         return teacherDao.findAll();
     }
+
+    @Override
+    public Teacher getTeacher(long id) {
+        return teacherDao.findById(id);
+    }
 }

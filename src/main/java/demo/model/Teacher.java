@@ -1,11 +1,21 @@
 package demo.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Teacher implements Serializable {
   private long id;
   private String name;
   private String title;
+  private List<Course> courses;
+
+  public List<Course> getCourses() {
+    return courses;
+  }
+
+  public void setCourses(List<Course> courses) {
+    this.courses = courses;
+  }
 
   public long getId() {
     return id;
