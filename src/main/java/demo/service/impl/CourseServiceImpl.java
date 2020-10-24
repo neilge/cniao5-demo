@@ -20,6 +20,11 @@ public class CourseServiceImpl implements CourseService {
   }
 
   @Override
+  public List<Course> getAllMyCourses(long accountId) {
+    return courseDao.findAllByAccountId(accountId);
+  }
+
+  @Override
   public Course getCourse(long id) {
     return courseDao.findById(id);
   }

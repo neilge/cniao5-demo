@@ -1,8 +1,11 @@
 package demo.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Teacher implements Serializable {
   private long id;
   private String name;

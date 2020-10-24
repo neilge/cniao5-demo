@@ -24,4 +24,10 @@ public class CourseDaoTest {
     System.out.println(course);
     System.out.println(course.getLessons());
   }
+
+  @Test
+  public void testGetAllCourseForAnAccount() {
+    List<Course> courses = courseDao.findAllByAccountId(3);
+    System.out.println(courses);
+  }
 }

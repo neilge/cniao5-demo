@@ -30,6 +30,15 @@
         FROM course c;
     </select>
 
+    <select id="findAllByAccountId" resultMap="courseResultMap">
+        SELECT
+        <include refid="course_info" />
+        FROM account a
+        LEFT OUTER JOIN student_course sc ON a.id = sc.student_id
+        LEFT OUTER JOIN course c ON c.id = sc.course_id
+        WHERE a.id = #{id};
+    </select>
+
     <select id="findById" resultMap="courseLessonMap">
         SELECT
         <include refid="course_info" />,

@@ -1,11 +1,14 @@
 package demo.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 
 /**
  * @author Neo
  * @since 10/17/2020-7:33 PM
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Account implements Serializable {
 
   private long id;

@@ -23,6 +23,11 @@ public class CourseController {
     return JsonResponse.newSucceedBuilder().setData(courseService.getAllCourses()).build();
   }
 
+  @GetMapping("/my_courses/{id}")
+  public JsonResponse getAllMyCourses(@PathVariable("id") long id) {
+    return JsonResponse.newSucceedBuilder().setData(courseService.getAllMyCourses(id)).build();
+  }
+
   @GetMapping("/id/{id}")
   public JsonResponse getCourseById(@PathVariable("id") long id) {
     return JsonResponse.newSucceedBuilder().setData(courseService.getCourse(id)).build();

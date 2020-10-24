@@ -1,16 +1,17 @@
 package demo.service;
 
-import demo.model.Account;
 import demo.model.Course;
 
 import java.util.List;
 
 public interface CourseService {
-    List<Course> getAllCourses();
+  List<Course> getAllCourses();
 
-    Course getCourse(long id);
+  List<Course> getAllMyCourses(long accountId);
 
-    Course createCourse(Course course);
+  Course getCourse(long id);
 
-    Course purchaseCourse(long courseId, long accountId);
+  Course createCourse(Course course);
+
+  Course purchaseCourse(long courseId, long accountId);
 }
