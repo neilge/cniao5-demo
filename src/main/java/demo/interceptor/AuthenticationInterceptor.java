@@ -16,13 +16,13 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired private JWTUtil jwtUtil;
 
-    @Value("${jwt.whitelist}")
-    private List<String> whitelistPaths;
+    @Value("${jwt.blacklist}")
+    private List<String> blacklist;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
-        if(whitelistPaths.stream().anyMatch(path -> uri.endsWith(path))) {
+        if(!blacklist.stream().anyMatch(path -> uri.endsWith(path))) {
             return true;
         }
         String token = request.getHeader("Authorization");

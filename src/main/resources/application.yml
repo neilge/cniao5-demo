@@ -36,5 +36,5 @@ captcha:
 jwt:
   secret: abcdefg1234567
   expire: 60000
-  whitelist: /captcha, /registration, /login
+  blacklist: /accounts
 
