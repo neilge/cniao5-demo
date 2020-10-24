@@ -1,11 +1,13 @@
-package demo.model;
+package demo.controller.common;
+
+import demo.model.Account;
 
 import java.io.Serializable;
 
 public class VerificationRequest implements Serializable {
 
-  String verificationCode;
-  Account account;
+  private String verificationCode;
+  private Account account;
 
   public String getVerificationCode() {
     return verificationCode;

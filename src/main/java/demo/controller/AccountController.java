@@ -2,7 +2,7 @@ package demo.controller;
 
 import demo.controller.common.JsonResponse;
 import demo.model.Account;
-import demo.model.VerificationRequest;
+import demo.controller.common.VerificationRequest;
 import demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

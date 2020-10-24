@@ -1,6 +1,7 @@
 package demo.controller;
 
 import demo.controller.common.JsonResponse;
+import demo.controller.common.PurchaseRequest;
 import demo.model.Course;
 import demo.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,7 @@ public class CourseController {
 
   @GetMapping("/courses")
   public JsonResponse getAllCourses() {
-    return JsonResponse.newSucceedBuilder()
-        .setData(courseService.getAllCourses())
-        .build();
+    return JsonResponse.newSucceedBuilder().setData(courseService.getAllCourses()).build();
   }
 
   @GetMapping("/id/{id}")
@@ -32,5 +31,12 @@ public class CourseController {
   @PostMapping("/create")
   public JsonResponse createCourse(@RequestBody Course course) {
     return JsonResponse.newSucceedBuilder().setData(courseService.createCourse(course)).build();
+  }
+
+  @PostMapping("/purchase")
+  public JsonResponse purchaseCourse(@RequestBody PurchaseRequest request) {
+    return JsonResponse.newSucceedBuilder()
+        .setData(courseService.purchaseCourse(request.getCourseId(), request.getAccountId()))
+        .build();
   }
 }

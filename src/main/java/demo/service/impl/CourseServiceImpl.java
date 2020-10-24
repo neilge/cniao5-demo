@@ -34,4 +34,15 @@ public class CourseServiceImpl implements CourseService {
     }
     return course;
   }
+
+  @Override
+  public Course purchaseCourse(long courseId, long accountId) {
+    try {
+      courseDao.addOneToStudentCourse(courseId, accountId);
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new BackendException("购买课程失败");
+    }
+    return courseDao.findById(courseId);
+  }
 }

@@ -43,4 +43,9 @@
         INSERT INTO course(description, price, is_free, name)
         VALUES (#{description}, #{price}, #{isFree}, #{name});
     </insert>
+
+    <insert id="addOneToStudentCourse">
+        INSERT INTO student_course(student_id, course_id)
+        VALUES (#{accountId}, #{courseId});
+    </insert>
 </mapper>

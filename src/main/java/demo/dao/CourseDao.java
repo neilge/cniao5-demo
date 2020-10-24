@@ -11,4 +11,6 @@ public interface CourseDao {
     Course findById(long id);
 
     void addOne(Course course);
+
+    void addOneToStudentCourse(long courseId, long accountId);
 }
