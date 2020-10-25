@@ -19,8 +19,9 @@ public class JWTUtil {
 
   @Autowired private AccountDao accountDao;
 
-  public String generateToken(String email) {
+  public String generateToken(long id, String email) {
     return Jwts.builder()
+        .setId(String.valueOf(id))
         .setSubject(email)
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + expire))
@@ -29,7 +30,15 @@ public class JWTUtil {
   }
 
   public boolean validateToken(String token) {
-    return !isTokenExpired(token) && isEmailValidated(token);
+    return !isTokenExpired(token) && isAccountValidated(token);
+  }
+
+  public String parseEmail(String token) {
+    return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
+  }
+
+  public long parseId(String token) {
+    return Long.parseLong(Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getId());
   }
 
   private boolean isTokenExpired(String token) {
@@ -38,11 +47,12 @@ public class JWTUtil {
     return expiration.before(new Date(System.currentTimeMillis()));
   }
 
-  private boolean isEmailValidated(String token) {
-    String email = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
+  private boolean isAccountValidated(String token) {
+    String email = parseEmail(token);
+    long id = parseId(token);
     // 从Redis或其他缓存中读取数据.
-    Account account = accountDao.findByEmail(email);
-    return account != null;
+    Account account = accountDao.findById(id);
+    return account != null && account.equals(accountDao.findByEmail(email));
   }
 
   public String getSecret() {

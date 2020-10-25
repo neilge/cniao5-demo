@@ -9,6 +9,8 @@ public interface CourseService {
 
   List<Course> getAllMyCourses(long accountId);
 
+  List<Course> getAllMyCourses(String jwt);
+
   Course getCourse(long id);
 
   Course createCourse(Course course);

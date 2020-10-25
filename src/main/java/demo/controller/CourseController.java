@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/course")
 public class CourseController {
@@ -26,6 +28,12 @@ public class CourseController {
   @GetMapping("/my_courses/{id}")
   public JsonResponse getAllMyCourses(@PathVariable("id") long id) {
     return JsonResponse.newSucceedBuilder().setData(courseService.getAllMyCourses(id)).build();
+  }
+
+  @GetMapping("/my_courses")
+  public JsonResponse getAllMyCourses(HttpServletRequest request) {
+    String token = request.getHeader("Authorization");
+    return JsonResponse.newSucceedBuilder().setData(courseService.getAllMyCourses(token)).build();
   }
 
   @GetMapping("/id/{id}")

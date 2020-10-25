@@ -4,6 +4,7 @@ import demo.common.BackendException;
 import demo.dao.CourseDao;
 import demo.model.Course;
 import demo.service.CourseService;
+import demo.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,8 @@ import java.util.List;
 
 @Service
 public class CourseServiceImpl implements CourseService {
+
+  @Autowired private JWTUtil jwtUtil;
 
   @Autowired private CourseDao courseDao;
 
@@ -22,6 +25,18 @@ public class CourseServiceImpl implements CourseService {
   @Override
   public List<Course> getAllMyCourses(long accountId) {
     return courseDao.findAllByAccountId(accountId);
+  }
+
+  @Override
+  public List<Course> getAllMyCourses(String jwt) {
+    long id = 0;
+    try {
+      id = jwtUtil.parseId(jwt);
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new BackendException("验证失败, 请重新登录");
+    }
+    return courseDao.findAllByAccountId(id);
   }
 
   @Override

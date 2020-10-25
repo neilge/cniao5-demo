@@ -14,14 +14,14 @@ public class JWTUtilTest {
   @Test
   public void testTokenVerification() {
     String email = "neilge001@gmail.com";
-    String jwt = jwtUtil.generateToken(email);
+    String jwt = jwtUtil.generateToken(1, email);
     assertTrue(jwtUtil.validateToken(jwt));
   }
 
   @Test
   public void testTokenVerification_failed() throws InterruptedException {
     String email = "neilge001@gmail.com";
-    String jwt = jwtUtil.generateToken(email);
+    String jwt = jwtUtil.generateToken(1, email);
     Thread.sleep(1000);
     assertTrue(jwtUtil.validateToken(jwt));
   }

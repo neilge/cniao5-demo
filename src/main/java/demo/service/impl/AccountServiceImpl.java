@@ -69,7 +69,7 @@ public class AccountServiceImpl implements AccountService {
   public String login(Account account) {
     Account storageAccount = accountDao.findByEmail(account.getEmail());
     if (storageAccount != null && account.getPassword().equals(storageAccount.getPassword())) {
-      return jwtUtil.generateToken(account.getEmail());
+      return jwtUtil.generateToken(storageAccount.getId(), storageAccount.getEmail());
     }
     throw new BackendException("登录失败");
   }
