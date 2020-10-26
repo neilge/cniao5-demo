@@ -33,8 +33,17 @@ encoding:
 captcha:
   expire: 60
 
-jwt:
-  secret: abcdefg1234567
-  expire: 3600000
-  blacklist: /accounts, /course/id
+authorization:
+  jwt:
+    secret: abcdefg1234567
+    expire: 3600000
+  interceptor:
+    blacklist:
+      - /account/**
+      - /course/**
+    whitelist:
+      - /account/captcha
+      - /account/registration
+      - /account/login
+      - /course/courses
 

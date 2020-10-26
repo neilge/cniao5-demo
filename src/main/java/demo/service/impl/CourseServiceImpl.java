@@ -23,11 +23,6 @@ public class CourseServiceImpl implements CourseService {
   }
 
   @Override
-  public List<Course> getAllMyCourses(long accountId) {
-    return courseDao.findAllByAccountId(accountId);
-  }
-
-  @Override
   public List<Course> getAllMyCourses(String jwt) {
     long id = 0;
     try {

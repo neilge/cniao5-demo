@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@ConfigurationProperties("jwt")
+@ConfigurationProperties("authorization.jwt")
 @Component
 public class JWTUtil {
 
@@ -30,7 +30,15 @@ public class JWTUtil {
   }
 
   public boolean validateToken(String token) {
-    return !isTokenExpired(token) && isAccountValidated(token);
+    if (isTokenExpired(token)) {
+      System.err.println("JWT 已过期");
+      return false;
+    }
+    if (!isAccountValidated(token)) {
+      System.err.println("JWT 身份验证错误");
+      return false;
+    }
+    return true;
   }
 
   public String parseEmail(String token) {
@@ -52,7 +60,7 @@ public class JWTUtil {
     long id = parseId(token);
     // 从Redis或其他缓存中读取数据.
     Account account = accountDao.findById(id);
-    return account != null && account.equals(accountDao.findByEmail(email));
+    return account != null && account.getEmail().equals(email);
   }
 
   public String getSecret() {

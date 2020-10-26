@@ -7,8 +7,6 @@ import java.util.List;
 public interface CourseService {
   List<Course> getAllCourses();
 
-  List<Course> getAllMyCourses(long accountId);
-
   List<Course> getAllMyCourses(String jwt);
 
   Course getCourse(long id);
