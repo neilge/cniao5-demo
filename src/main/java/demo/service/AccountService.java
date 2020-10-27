@@ -10,13 +10,9 @@ import java.util.List;
  */
 public interface AccountService {
 
-  List<Account> getAllAccounts();
+  Account createAccount(Account account, String verificationCode, String encryptedCode);
 
-  Account creatAccount(Account account, String verificationCode, String encryptedCode);
-
-  Account getAccount(long id);
-
-  Account getAccount(String email);
+  Account getAccount(Long id);
 
   String generateCaptcha(String email);
 

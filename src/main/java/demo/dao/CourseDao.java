@@ -9,13 +9,13 @@ public interface CourseDao {
 
     List<Course> findAll();
 
-    Course findCourseInfo(long accountId, long courseId);
+    Course findCourseInfo(Long accountId, Long courseId);
 
     void addOne(Course course);
 
-    void addOneToStudentCourse(long courseId, long accountId);
+    void addOneToStudentCourse(Long courseId, Long accountId);
 
-    List<Course> findAllByAccountId(long accountId);
+    List<Course> findAllByAccountId(Long accountId);
 
-    Lesson findLessonByKey(String key, long accountId);
+    Lesson findLessonByKey(String key, Long accountId);
 }

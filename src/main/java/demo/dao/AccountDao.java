@@ -11,14 +11,9 @@ import java.util.List;
 public interface AccountDao {
 
   /**
-   * 查询所有用户
-   * */
-  List<Account> findAll();
-
-  /**
    * 通过Id查询用户
    */
-  Account findById(long id);
+  Account findById(Long id);
 
   /**
    * 通过Email查询用户

@@ -4,7 +4,7 @@ import demo.common.BackendException;
 import demo.dao.CourseDao;
 import demo.model.Course;
 import demo.model.Lesson;
-import demo.controller.common.Video;
+import demo.model.Video;
 import demo.service.CourseService;
 import demo.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +25,12 @@ public class CourseServiceImpl implements CourseService {
   }
 
   @Override
-  public List<Course> getAllMyCourses(String jwt) {
-    long id = 0;
-    try {
-      id = jwtUtil.parseId(jwt);
-    } catch (Exception e) {
-      e.printStackTrace();
-      throw new BackendException("验证失败, 请重新登录");
-    }
-    return courseDao.findAllByAccountId(id);
+  public List<Course> getAllPurchasedCourses(Long accountId) {
+    return courseDao.findAllByAccountId(accountId);
   }
 
   @Override
-  public Course getCourse(long accountId, long courseId) {
+  public Course getCourse(Long accountId, Long courseId) {
     return courseDao.findCourseInfo(accountId, courseId);
   }
 
@@ -53,7 +46,7 @@ public class CourseServiceImpl implements CourseService {
   }
 
   @Override
-  public Course purchaseCourse(long courseId, long accountId) {
+  public Course purchaseCourse(Long courseId, Long accountId) {
     try {
       courseDao.addOneToStudentCourse(courseId, accountId);
     } catch (Exception e) {
@@ -64,7 +57,7 @@ public class CourseServiceImpl implements CourseService {
   }
 
   @Override
-  public Video getVideo(long accountId, String key) {
+  public Video getVideo(Long accountId, String key) {
     Lesson lesson = courseDao.findLessonByKey(key, accountId);
     if (lesson.getCourse().isPurchased()
         || lesson.isFree()

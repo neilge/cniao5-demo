@@ -1,20 +1,20 @@
 package demo.service;
 
 import demo.model.Course;
-import demo.controller.common.Video;
+import demo.model.Video;
 
 import java.util.List;
 
 public interface CourseService {
   List<Course> getAllCourses();
 
-  List<Course> getAllMyCourses(String jwt);
+  List<Course> getAllPurchasedCourses(Long id);
 
-  Course getCourse(long accountId, long courseId);
+  Course getCourse(Long accountId, Long courseId);
 
   Course createCourse(Course course);
 
-  Course purchaseCourse(long courseId, long accountId);
+  Course purchaseCourse(Long courseId, Long accountId);
 
-  Video getVideo(long accountId, String key);
+  Video getVideo(Long accountId, String key);
 }

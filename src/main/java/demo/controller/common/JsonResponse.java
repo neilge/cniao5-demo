@@ -16,24 +16,12 @@ public class JsonResponse implements Serializable {
     return code;
   }
 
-  public void setCode(Long code) {
-    this.code = code;
-  }
-
   public String getMessage() {
     return message;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
   public Object getData() {
     return data;
-  }
-
-  public void setData(Object data) {
-    this.data = data;
   }
 
   public static Builder newBuilder() {
@@ -42,6 +30,18 @@ public class JsonResponse implements Serializable {
 
   public static Builder newSucceedBuilder() {
     return new Builder().setCode(1).setMessage(Constant.SUCCEED);
+  }
+
+  private void setCode(Long code) {
+    this.code = code;
+  }
+
+  private void setMessage(String message) {
+    this.message = message;
+  }
+
+  private void setData(Object data) {
+    this.data = data;
   }
 
   public static class Builder {

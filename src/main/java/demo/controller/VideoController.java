@@ -18,7 +18,7 @@ public class VideoController {
     public JsonResponse getVideo(@PathVariable("key") String key, HttpServletRequest request) {
         // 通过JWT获取用户信息
         String token = request.getHeader("Authorization");
-        long accountId = jwtUtil.parseId(token);
+        Long accountId = jwtUtil.parseId(token);
         return JsonResponse.newSucceedBuilder().setData(courseService.getVideo(accountId, key)).build();
     }
 }

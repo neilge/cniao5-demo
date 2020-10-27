@@ -1,16 +1,12 @@
 package demo.controller;
 
 import demo.controller.common.JsonResponse;
-import demo.model.Account;
 import demo.controller.common.VerificationRequest;
+import demo.model.Account;
 import demo.service.AccountService;
+import demo.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,19 +20,14 @@ public class AccountController {
 
   @Autowired AccountService accountService;
 
-  @GetMapping("/accounts")
-  public JsonResponse getAllAccounts() {
-    return JsonResponse.newSucceedBuilder().setData(accountService.getAllAccounts()).build();
-  }
+  @Autowired private JWTUtil jwtUtil;
 
-  @GetMapping("/id/{id}")
-  public JsonResponse getAccountById(@PathVariable("id") long id) {
-    return JsonResponse.newSucceedBuilder().setData(accountService.getAccount(id)).build();
-  }
+  @Autowired HttpServletRequest request;
 
-  @GetMapping("/email/{email}")
-  public JsonResponse getAccountByEmail(@PathVariable("email") String email) {
-    return JsonResponse.newSucceedBuilder().setData(accountService.getAccount(email)).build();
+  @GetMapping("/my_account")
+  public JsonResponse getMyAccount() {
+    Long accountId = jwtUtil.parseId(request.getHeader("Authorization"));
+    return JsonResponse.newSucceedBuilder().setData(accountService.getAccount(accountId)).build();
   }
 
   @PostMapping("/captcha")
@@ -48,11 +39,11 @@ public class AccountController {
 
   @PostMapping("/registration")
   public JsonResponse registerAccount(
-      @RequestBody VerificationRequest verificationRequest, HttpServletRequest request) {
+      @RequestBody VerificationRequest verificationRequest) {
     String encryptedCode = request.getHeader("token");
     return JsonResponse.newSucceedBuilder()
         .setData(
-            accountService.creatAccount(
+            accountService.createAccount(
                 verificationRequest.getAccount(),
                 verificationRequest.getVerificationCode(),
                 encryptedCode))

@@ -21,21 +21,21 @@ public class CourseDaoTest {
 
   @Test
   public void testGetCourseInfo() {
-    Course course = courseDao.findCourseInfo(2, 1);
+    Course course = courseDao.findCourseInfo(2L, 1L);
     System.out.println(course);
     System.out.println(course.getLessons());
   }
 
   @Test
   public void testGetAllCourseForAnAccount() {
-    List<Course> courses = courseDao.findAllByAccountId(3);
+    List<Course> courses = courseDao.findAllByAccountId(3L);
     System.out.println(courses);
   }
 
   @Test
   public void testGetLessonByKey() {
     String key = "1956a44e0ca711e8a97600163e0230fa";
-    Lesson lesson = courseDao.findLessonByKey(key, 2);
+    Lesson lesson = courseDao.findLessonByKey(key, 2L);
     System.out.println(lesson);
     System.out.println(lesson.getCourse());
   }

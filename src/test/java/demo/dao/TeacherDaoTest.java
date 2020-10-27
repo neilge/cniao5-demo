@@ -21,7 +21,7 @@ public class TeacherDaoTest {
 
   @Test
   public void testGetById() {
-    Teacher teacher = teacherDao.findById(1);
+    Teacher teacher = teacherDao.findById(1L);
     System.out.println(teacher);
     System.out.println(teacher.getCourses());
   }

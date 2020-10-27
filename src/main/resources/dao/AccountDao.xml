@@ -13,13 +13,6 @@
     <!--用户常用列-->
     <sql id="user_info">id, email, username, password</sql>
 
-    <!--查询所有用户-->
-    <select id="findAll" resultMap="accountResultMap">
-        SELECT
-        <include refid="user_info"/>
-        FROM account;
-    </select>
-
     <!--根据id查询用户-->
     <select id="findById" resultMap="accountResultMap">
         SELECT

@@ -29,24 +29,10 @@ public class AccountServiceImpl implements AccountService {
   @Autowired private JWTUtil jwtUtil;
 
   @Override
-  public List<Account> getAllAccounts() {
-    return accountDao.findAll();
-  }
-
-  @Override
-  public Account getAccount(long id) {
+  public Account getAccount(Long id) {
     Account account = accountDao.findById(id);
     if (account == null) {
       throw new BackendException("用户" + id + "不存在");
-    }
-    return account;
-  }
-
-  @Override
-  public Account getAccount(String email) {
-    Account account = accountDao.findByEmail(email);
-    if (account == null) {
-      throw new BackendException("用户" + email + "不存在");
     }
     return account;
   }
@@ -75,7 +61,7 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public Account creatAccount(Account account, String verificationCode, String token) {
+  public Account createAccount(Account account, String verificationCode, String token) {
     if (verificationUtil.isTokenExpired(token)) {
       throw new BackendException("验证码已失效");
     }

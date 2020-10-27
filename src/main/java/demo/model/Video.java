@@ -1,4 +1,4 @@
-package demo.controller.common;
+package demo.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
