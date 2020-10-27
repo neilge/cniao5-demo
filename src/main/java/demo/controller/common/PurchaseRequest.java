@@ -3,22 +3,22 @@ package demo.controller.common;
 import java.io.Serializable;
 
 public class PurchaseRequest implements Serializable {
-  private long courseId;
-  private long accountId;
+  private Long courseId;
+  private Long accountId;
 
-  public long getCourseId() {
+  public Long getCourseId() {
     return courseId;
   }
 
-  public void setCourseId(long courseId) {
+  public void setCourseId(Long courseId) {
     this.courseId = courseId;
   }
 
-  public long getAccountId() {
+  public Long getAccountId() {
     return accountId;
   }
 
-  public void setAccountId(long accountId) {
+  public void setAccountId(Long accountId) {
     this.accountId = accountId;
   }
 

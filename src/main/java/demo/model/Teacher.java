@@ -7,7 +7,7 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Teacher implements Serializable {
-  private long id;
+  private Long id;
   private String name;
   private String title;
   private List<Course> courses;
@@ -20,11 +20,11 @@ public class Teacher implements Serializable {
     this.courses = courses;
   }
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

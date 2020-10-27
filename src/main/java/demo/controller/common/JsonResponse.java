@@ -6,17 +6,17 @@ import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class JsonResponse implements Serializable {
-  private long code;
+  private Long code;
   private String message;
   private Object data;
 
   private JsonResponse() {}
 
-  public long getCode() {
+  public Long getCode() {
     return code;
   }
 
-  public void setCode(long code) {
+  public void setCode(Long code) {
     this.code = code;
   }
 
@@ -45,7 +45,7 @@ public class JsonResponse implements Serializable {
   }
 
   public static class Builder {
-    private long code;
+    private Long code;
     private String message;
     private Object data;
 

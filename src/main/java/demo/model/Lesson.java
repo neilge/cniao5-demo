@@ -6,9 +6,9 @@ import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Lesson implements Serializable {
-  private long id;
+  private Long id;
   private String name;
-  private boolean isFree;
+  private Boolean isFree;
   private Long duration;
   private String key;
 
@@ -22,11 +22,11 @@ public class Lesson implements Serializable {
     this.course = course;
   }
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -38,11 +38,11 @@ public class Lesson implements Serializable {
     this.name = name;
   }
 
-  public boolean isFree() {
+  public Boolean isFree() {
     return isFree;
   }
 
-  public void setFree(boolean free) {
+  public void setFree(Boolean free) {
     isFree = free;
   }
 

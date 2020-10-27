@@ -7,11 +7,11 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Course implements Serializable {
-  private long id;
+  private Long id;
   private String description;
-  private boolean isFree;
+  private Boolean isFree;
   private String name;
-  private double price;
+  private Double price;
   private Boolean isPurchased;
 
   private List<Lesson> lessons;
@@ -24,11 +24,11 @@ public class Course implements Serializable {
     this.lessons = lessons;
   }
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -40,11 +40,11 @@ public class Course implements Serializable {
     this.description = description;
   }
 
-  public boolean isFree() {
+  public Boolean isFree() {
     return isFree;
   }
 
-  public void setFree(boolean free) {
+  public void setFree(Boolean free) {
     isFree = free;
   }
 
@@ -56,11 +56,11 @@ public class Course implements Serializable {
     this.name = name;
   }
 
-  public double getPrice() {
+  public Double getPrice() {
     return price;
   }
 
-  public void setPrice(double price) {
+  public void setPrice(Double price) {
     this.price = price;
   }
 
