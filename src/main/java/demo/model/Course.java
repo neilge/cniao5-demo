@@ -12,6 +12,7 @@ public class Course implements Serializable {
   private boolean isFree;
   private String name;
   private double price;
+  private Boolean isPurchased;
 
   private List<Lesson> lessons;
 
@@ -63,6 +64,14 @@ public class Course implements Serializable {
     this.price = price;
   }
 
+  public Boolean isPurchased() {
+    return isPurchased;
+  }
+
+  public void setPurchased(Boolean purchased) {
+    isPurchased = purchased;
+  }
+
   @Override
   public String toString() {
     return "Course{"
@@ -78,6 +87,10 @@ public class Course implements Serializable {
         + '\''
         + ", price="
         + price
+        + ", isPurchased="
+        + isPurchased
+        + ", lessons="
+        + lessons
         + '}';
   }
 }

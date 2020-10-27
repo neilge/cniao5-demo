@@ -10,7 +10,17 @@ public class Lesson implements Serializable {
   private String name;
   private boolean isFree;
   private Long duration;
-  private String url;
+  private String key;
+
+  private Course course;
+
+  public Course getCourse() {
+    return course;
+  }
+
+  public void setCourse(Course course) {
+    this.course = course;
+  }
 
   public long getId() {
     return id;
@@ -44,12 +54,12 @@ public class Lesson implements Serializable {
     this.duration = duration;
   }
 
-  public String getUrl() {
-    return url;
+  public String getKey() {
+    return key;
   }
 
-  public void setUrl(String url) {
-    this.url = url;
+  public void setKey(String key) {
+    this.key = key;
   }
 
   @Override
@@ -64,8 +74,8 @@ public class Lesson implements Serializable {
         + isFree
         + ", duration="
         + duration
-        + ", url='"
-        + url
+        + ", key='"
+        + key
         + '\''
         + '}';
   }

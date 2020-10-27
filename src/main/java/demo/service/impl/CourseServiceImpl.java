@@ -3,6 +3,8 @@ package demo.service.impl;
 import demo.common.BackendException;
 import demo.dao.CourseDao;
 import demo.model.Course;
+import demo.model.Lesson;
+import demo.controller.common.Video;
 import demo.service.CourseService;
 import demo.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +37,8 @@ public class CourseServiceImpl implements CourseService {
   }
 
   @Override
-  public Course getCourse(long id) {
-    return courseDao.findById(id);
+  public Course getCourse(long accountId, long courseId) {
+    return courseDao.findCourseInfo(accountId, courseId);
   }
 
   @Override
@@ -58,6 +60,22 @@ public class CourseServiceImpl implements CourseService {
       e.printStackTrace();
       throw new BackendException("购买课程失败");
     }
-    return courseDao.findById(courseId);
+    return courseDao.findCourseInfo(accountId, courseId);
+  }
+
+  @Override
+  public Video getVideo(long accountId, String key) {
+    Lesson lesson = courseDao.findLessonByKey(key, accountId);
+    if (lesson.getCourse().isPurchased()
+        || lesson.isFree()
+        || lesson.getCourse().isFree()) {
+      String uri = getUriByKey(key);
+      return Video.newBuilder().setKey(key).setTitle(lesson.getName()).setUrl(uri).build();
+    }
+    throw new BackendException("您没有权限访问该视频");
+  }
+
+  private String getUriByKey(String key) {
+    return "https://dummyvideosrouce.com/video/" + key;
   }
 }

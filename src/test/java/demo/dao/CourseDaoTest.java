@@ -1,6 +1,7 @@
 package demo.dao;
 
 import demo.model.Course;
+import demo.model.Lesson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,8 +20,8 @@ public class CourseDaoTest {
   }
 
   @Test
-  public void testGetCourseWithLessons() {
-    Course course = courseDao.findById(1);
+  public void testGetCourseInfo() {
+    Course course = courseDao.findCourseInfo(2, 1);
     System.out.println(course);
     System.out.println(course.getLessons());
   }
@@ -29,5 +30,13 @@ public class CourseDaoTest {
   public void testGetAllCourseForAnAccount() {
     List<Course> courses = courseDao.findAllByAccountId(3);
     System.out.println(courses);
+  }
+
+  @Test
+  public void testGetLessonByKey() {
+    String key = "1956a44e0ca711e8a97600163e0230fa";
+    Lesson lesson = courseDao.findLessonByKey(key, 2);
+    System.out.println(lesson);
+    System.out.println(lesson.getCourse());
   }
 }

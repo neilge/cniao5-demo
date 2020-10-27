@@ -4,48 +4,74 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="demo.dao.CourseDao">
     <resultMap id="courseResultMap" type="demo.model.Course">
-        <id column="id" property="id" javaType="java.lang.Long" />
+        <id column="id" property="id" javaType="java.lang.Long"/>
         <result column="description" property="description" javaType="java.lang.String"/>
         <result column="price" property="price" javaType="java.lang.Double"/>
         <result column="is_free" property="isFree" javaType="java.lang.Boolean"/>
         <result column="name" property="name" javaType="java.lang.String"/>
+        <result column="purchased" property="isPurchased" javaType="java.lang.Boolean"/>
+    </resultMap>
+
+    <resultMap id="lessonResultMap" type="demo.model.Lesson">
+        <id column="l_id" property="id" javaType="java.lang.Long"/>
+        <result column="l_is_free" property="isFree" javaType="java.lang.Boolean"/>
+        <result column="l_name" property="name" javaType="java.lang.String"/>
+        <result column="duration" property="duration" javaType="java.lang.Long"/>
+        <result column="key" property="key" javaType="java.lang.String"/>
     </resultMap>
 
     <resultMap id="courseLessonMap" type="demo.model.Course" extends="courseResultMap">
-        <collection property="lessons" ofType="demo.model.Lesson">
-            <id column="l_id" property="id" javaType="java.lang.Long"/>
-            <result column="l_is_free" property="isFree" javaType="java.lang.Boolean"/>
-            <result column="l_name" property="name" javaType="java.lang.String"/>
-            <result column="duration" property="duration" javaType="java.lang.Long"/>
-            <result column="url" property="url" javaType="java.lang.String"/>
-        </collection>
+        <collection property="lessons" ofType="demo.model.Lesson" resultMap="lessonResultMap" />
+    </resultMap>
+
+    <resultMap id="LessonCourseMap" type="demo.model.Lesson" extends="lessonResultMap">
+        <association property="course" resultMap="courseResultMap" />
     </resultMap>
 
     <sql id="course_info">c.id, description, price, c.is_free, c.name</sql>
-    <sql id="lesson_info">l.id as l_id, l.is_free as l_is_free, l.name as l_name, duration, url</sql>
+    <sql id="lesson_info">l.id as l_id, l.is_free as l_is_free, l.name as l_name, duration, l.key</sql>
+    <sql id="purchase_info">
+        (SELECT EXISTS
+        (SELECT *
+        FROM student_course sc
+        WHERE sc.student_id = #{accountId} AND sc.course_id = #{courseId}))
+        as purchased
+    </sql>
 
     <select id="findAll" resultMap="courseResultMap">
         SELECT
-        <include refid="course_info" />
+        <include refid="course_info"/>
         FROM course c;
     </select>
 
     <select id="findAllByAccountId" resultMap="courseResultMap">
         SELECT
-        <include refid="course_info" />
+        <include refid="course_info"/>,
+        1 as purchased
         FROM account a
         LEFT OUTER JOIN student_course sc ON a.id = sc.student_id
         LEFT OUTER JOIN course c ON c.id = sc.course_id
         WHERE a.id = #{id};
     </select>
 
-    <select id="findById" resultMap="courseLessonMap">
+    <select id="findCourseInfo" resultMap="courseLessonMap">
         SELECT
-        <include refid="course_info" />,
-        <include refid="lesson_info" />
+        <include refid="course_info"/>,
+        <include refid="lesson_info"/>,
+        <include refid="purchase_info"/>
         FROM course c
         LEFT OUTER JOIN lesson l on c.id=l.course_id
-        WHERE c.id=#{id};
+        WHERE c.id=#{courseId};
+    </select>
+
+    <select id="findLessonByKey" resultMap="LessonCourseMap">
+        SELECT
+        <include refid="lesson_info"/>,
+        <include refid="course_info"/>,
+        NOT ISNULL(sc.student_id) AS purchased
+        FROM lesson l, course c
+        LEFT OUTER JOIN student_course sc ON sc.student_id = #{accountId} AND sc.course_id = c.id
+        WHERE l.key = #{key} AND l.course_id = c.id;
     </select>
 
     <insert id="addOne" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
